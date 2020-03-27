@@ -1,5 +1,5 @@
 {
-    "name": "node-red-first-test",
+    "name": "ha-alexa-integration",
     "description": "Node-RED flow to connect Home Assistant soft thermostat with Alexa",
     "version": "0.0.1",
     "dependencies": {
