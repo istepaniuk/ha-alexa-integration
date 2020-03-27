@@ -127,16 +127,6 @@
         "hidden": false
     },
     {
-        "id": "3d99d3e8.2ca7dc",
-        "type": "ui_group",
-        "z": "",
-        "name": "Default",
-        "tab": "5b46cbcf.83b364",
-        "disp": false,
-        "width": "20",
-        "collapse": false
-    },
-    {
         "id": "84e56ae.440ce98",
         "type": "ui_spacer",
         "name": "spacer",
@@ -152,17 +142,6 @@
         "username": "rsgvv",
         "mqttserver": "mq-red.cb-net.co.uk",
         "webapiurl": "red.cb-net.co.uk"
-    },
-    {
-        "id": "e00238f1.5d04e",
-        "type": "ui_group",
-        "z": "",
-        "name": "Group 2",
-        "tab": "5b46cbcf.83b364",
-        "order": 2,
-        "disp": false,
-        "width": "20",
-        "collapse": false
     },
     {
         "id": "53642155.d6438",
