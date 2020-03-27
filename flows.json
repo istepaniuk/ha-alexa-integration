@@ -19,114 +19,7 @@
         "cacheJson": true
     },
     {
-        "id": "bfcc63c2.1b9ae",
-        "type": "ui_base",
-        "theme": {
-            "name": "theme-custom",
-            "lightTheme": {
-                "default": "#0094CE",
-                "baseColor": "#0094CE",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "darkTheme": {
-                "default": "#097479",
-                "baseColor": "#097479",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "customTheme": {
-                "name": "Untitled Theme 1",
-                "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "reset": false
-            },
-            "themeState": {
-                "base-color": {
-                    "default": "#4B7930",
-                    "value": "#4B7930",
-                    "edited": false
-                },
-                "page-titlebar-backgroundColor": {
-                    "value": "#4B7930",
-                    "edited": false
-                },
-                "page-backgroundColor": {
-                    "value": "#111111",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#000000",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#6db046",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#555555",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#333333",
-                    "edited": false
-                },
-                "widget-textColor": {
-                    "value": "#eeeeee",
-                    "edited": false
-                },
-                "widget-backgroundColor": {
-                    "value": "#4b7930",
-                    "edited": false
-                },
-                "widget-borderColor": {
-                    "value": "#333333",
-                    "edited": false
-                },
-                "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-                }
-            },
-            "angularTheme": {
-                "primary": "indigo",
-                "accents": "blue",
-                "warn": "red",
-                "background": "grey"
-            }
-        },
-        "site": {
-            "name": "Heating",
-            "hideToolbar": "false",
-            "allowSwipe": "false",
-            "lockMenu": "true",
-            "allowTempTheme": "false",
-            "dateFormat": "DD/MM/YYYY",
-            "sizes": {
-                "sx": 48,
-                "sy": 48,
-                "gx": 6,
-                "gy": 6,
-                "cx": 6,
-                "cy": 6,
-                "px": 0,
-                "py": 0
-            }
-        }
-    },
-    {
-        "id": "84e56ae.440ce98",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "",
-        "order": 1,
-        "width": "5",
-        "height": "4"
-    },
-    {
-        "id": "7bddef1e.19053",
+        "id": "12932107.cee0af",
         "type": "alexa-smart-home-v3-conf",
         "z": "",
         "username": "rsgvv",
@@ -137,12 +30,12 @@
         "id": "53642155.d6438",
         "type": "alexa-smart-home-v3",
         "z": "19d5a0f2.130707",
-        "conf": "7bddef1e.19053",
+        "conf": "12932107.cee0af",
         "device": "9074",
         "acknowledge": false,
         "name": "Heating",
         "topic": "",
-        "x": 250,
+        "x": 190,
         "y": 300,
         "wires": [
             [
@@ -310,7 +203,7 @@
         "customoutputs": [],
         "outputinitially": true,
         "state_type": "str",
-        "x": 280,
+        "x": 240,
         "y": 640,
         "wires": [
             [
@@ -340,7 +233,7 @@
         "id": "3451fcc9.c506dc",
         "type": "alexa-smart-home-v3-state",
         "z": "19d5a0f2.130707",
-        "conf": "7bddef1e.19053",
+        "conf": "12932107.cee0af",
         "device": "9074",
         "name": "Heating",
         "x": 1220,
