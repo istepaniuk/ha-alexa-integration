@@ -1,9 +1,4 @@
-node-red-first-test
-===================
+Home Assistant thermostat Alexa integration
+===========================================
 
-Testing Home Assistant integration and git
-
-### About
-
-This is your project's README.md file. It helps users understand what your
-project does, how to use it and anything else they may need to know.
+NodeRED flow to connect Home Assistant soft thermostat with Alexa

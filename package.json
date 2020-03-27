@@ -1,8 +1,11 @@
 {
     "name": "node-red-first-test",
-    "description": "Testing Home Assistant integration and git",
+    "description": "NodeRED flow to connect Home Assistant soft thermostat with Alexa",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-alexa-smart-home": "0.4.66",
+        "node-red-contrib-home-assistant-websocket": "0.21.5"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
