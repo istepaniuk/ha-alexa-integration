@@ -117,16 +117,6 @@
         }
     },
     {
-        "id": "5b46cbcf.83b364",
-        "type": "ui_tab",
-        "z": "",
-        "name": "Gas",
-        "icon": "flash",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "84e56ae.440ce98",
         "type": "ui_spacer",
         "name": "spacer",
@@ -370,14 +360,14 @@
         "id": "33ebd2b3.a8f4a6",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "State Report",
-        "active": true,
+        "name": "msg",
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1230,
+        "x": 1210,
         "y": 720,
         "wires": []
     },
@@ -448,7 +438,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1380,
+        "x": 1360,
         "y": 400,
         "wires": [
             []
