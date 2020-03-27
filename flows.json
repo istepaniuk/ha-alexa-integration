@@ -2,7 +2,7 @@
     {
         "id": "19d5a0f2.130707",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Heating control",
         "disabled": false,
         "info": ""
     },
@@ -19,10 +19,307 @@
         "cacheJson": true
     },
     {
-        "id": "2340d308.99e3a4",
+        "id": "bfcc63c2.1b9ae",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-custom",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#4B7930",
+                    "value": "#4B7930",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#4B7930",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#000000",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#6db046",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#4b7930",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Heating",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "true",
+            "allowTempTheme": "false",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "5b46cbcf.83b364",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Gas",
+        "icon": "flash",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3d99d3e8.2ca7dc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "5b46cbcf.83b364",
+        "disp": false,
+        "width": "20",
+        "collapse": false
+    },
+    {
+        "id": "84e56ae.440ce98",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "",
+        "order": 1,
+        "width": "5",
+        "height": "4"
+    },
+    {
+        "id": "7bddef1e.19053",
+        "type": "alexa-smart-home-v3-conf",
+        "z": "",
+        "username": "rsgvv",
+        "mqttserver": "mq-red.cb-net.co.uk",
+        "webapiurl": "red.cb-net.co.uk"
+    },
+    {
+        "id": "e00238f1.5d04e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Group 2",
+        "tab": "5b46cbcf.83b364",
+        "order": 2,
+        "disp": false,
+        "width": "20",
+        "collapse": false
+    },
+    {
+        "id": "53642155.d6438",
+        "type": "alexa-smart-home-v3",
+        "z": "19d5a0f2.130707",
+        "conf": "7bddef1e.19053",
+        "device": "9074",
+        "acknowledge": false,
+        "name": "Heating",
+        "topic": "",
+        "x": 250,
+        "y": 300,
+        "wires": [
+            [
+                "d72f0c09.ed5cd",
+                "cb61d2dc.eaae68",
+                "d724f2cb.d1a37"
+            ]
+        ],
+        "icon": "font-awesome/fa-thermometer-1"
+    },
+    {
+        "id": "f35f2c93.4e711",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Set temperature",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.home",
+        "data": "{\"hvac_mode\":\"heat\",\"temperature\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 720,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb61d2dc.eaae68",
+        "type": "debug",
+        "z": "19d5a0f2.130707",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 470,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d72f0c09.ed5cd",
+        "type": "switch",
+        "z": "19d5a0f2.130707",
+        "name": "Command",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OFF",
+                "vt": "str"
+            },
+            {
+                "t": "regex",
+                "v": "HEAT|ON",
+                "vt": "str",
+                "case": false
+            },
+            {
+                "t": "istype",
+                "v": "number",
+                "vt": "number"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 490,
+        "y": 300,
+        "wires": [
+            [
+                "68af64d4.10e094"
+            ],
+            [
+                "974c3c12.cff5b"
+            ],
+            [
+                "f35f2c93.4e711",
+                "974c3c12.cff5b"
+            ]
+        ]
+    },
+    {
+        "id": "974c3c12.cff5b",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Heating ON",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "turn_on",
+        "entityId": "climate.home",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 710,
+        "y": 300,
+        "wires": [
+            [
+                "f64a3c62.65a17"
+            ]
+        ]
+    },
+    {
+        "id": "68af64d4.10e094",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Heating OFF",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "turn_off",
+        "entityId": "climate.home",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 710,
+        "y": 200,
+        "wires": [
+            [
+                "f64a3c62.65a17"
+            ]
+        ]
+    },
+    {
+        "id": "ed120590.04b7e",
         "type": "trigger-state",
         "z": "19d5a0f2.130707",
-        "name": "Testing",
+        "name": "Heating state",
         "server": "bfed26e3.9fa28",
         "exposeToHomeAssistant": false,
         "haConfig": [
@@ -35,37 +332,175 @@
                 "value": ""
             }
         ],
-        "entityid": "binary_sensor.hallway_door",
+        "entityid": "climate.home",
         "entityidfiltertype": "exact",
         "debugenabled": false,
         "constraints": [],
         "constraintsmustmatch": "all",
         "outputs": 2,
         "customoutputs": [],
-        "outputinitially": false,
+        "outputinitially": true,
         "state_type": "str",
-        "x": 700,
-        "y": 360,
+        "x": 280,
+        "y": 640,
         "wires": [
             [
-                "385423b0.9b6b2c"
+                "783be855.039a18"
             ],
             []
         ]
     },
     {
-        "id": "385423b0.9b6b2c",
+        "id": "783be855.039a18",
+        "type": "function",
+        "z": "19d5a0f2.130707",
+        "name": "Inhibited state",
+        "func": "if(flow.get(\"inhibit\") === true){\n    return null;\n}\n\nlet newState = msg.data.event.new_state.attributes;\n\nreturn {\n    acknowledge: true,\n    payload: {\n        state: {\n            thermostatMode: msg.payload.toUpperCase(),\n            thermostatSetPoint: newState.temperature,\n            temperature: newState.current_temperature\n        }\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 900,
+        "y": 640,
+        "wires": [
+            [
+                "33ebd2b3.a8f4a6",
+                "3451fcc9.c506dc"
+            ]
+        ]
+    },
+    {
+        "id": "3451fcc9.c506dc",
+        "type": "alexa-smart-home-v3-state",
+        "z": "19d5a0f2.130707",
+        "conf": "7bddef1e.19053",
+        "device": "9074",
+        "name": "Heating",
+        "x": 1220,
+        "y": 640,
+        "wires": [],
+        "icon": "font-awesome/fa-cloud-upload"
+    },
+    {
+        "id": "8eeb31fb.f5cef",
+        "type": "alexa-smart-home-v3-resp",
+        "z": "19d5a0f2.130707",
+        "x": 1280,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "33ebd2b3.a8f4a6",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "",
+        "name": "State Report",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 930,
-        "y": 240,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1230,
+        "y": 720,
         "wires": []
+    },
+    {
+        "id": "3e87e6f8.51dd8a",
+        "type": "delay",
+        "z": "19d5a0f2.130707",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1220,
+        "y": 400,
+        "wires": [
+            [
+                "13086fb5.e650d8"
+            ]
+        ]
+    },
+    {
+        "id": "d724f2cb.d1a37",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "Inhibit",
+        "rules": [
+            {
+                "t": "set",
+                "p": "inhibit",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "13086fb5.e650d8",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "Enable",
+        "rules": [
+            {
+                "t": "set",
+                "p": "inhibit",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1380,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f64a3c62.65a17",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "Ack",
+        "rules": [
+            {
+                "t": "set",
+                "p": "aknowledge",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 300,
+        "wires": [
+            [
+                "8eeb31fb.f5cef",
+                "3e87e6f8.51dd8a"
+            ]
+        ]
     }
 ]
