@@ -40,90 +40,68 @@
         "wires": [
             [
                 "d72f0c09.ed5cd",
-                "cb61d2dc.eaae68",
-                "d724f2cb.d1a37"
+                "d724f2cb.d1a37",
+                "b1b7584a.43ebc8"
             ]
         ],
         "icon": "font-awesome/fa-thermometer-1"
-    },
-    {
-        "id": "f35f2c93.4e711",
-        "type": "api-call-service",
-        "z": "19d5a0f2.130707",
-        "name": "Set temperature",
-        "server": "bfed26e3.9fa28",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "climate",
-        "service": "set_temperature",
-        "entityId": "climate.home",
-        "data": "{\"hvac_mode\":\"heat\",\"temperature\":\"{{payload}}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "payload",
-        "output_location_type": "msg",
-        "mustacheAltTags": false,
-        "x": 720,
-        "y": 400,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "cb61d2dc.eaae68",
-        "type": "debug",
-        "z": "19d5a0f2.130707",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 470,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "d72f0c09.ed5cd",
         "type": "switch",
         "z": "19d5a0f2.130707",
         "name": "Command",
-        "property": "payload",
+        "property": "command",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "OFF",
+                "v": "TurnOff",
                 "vt": "str"
             },
             {
-                "t": "regex",
-                "v": "HEAT|ON",
-                "vt": "str",
-                "case": false
+                "t": "eq",
+                "v": "SetThermostatMode",
+                "vt": "str"
             },
             {
-                "t": "istype",
-                "v": "number",
-                "vt": "number"
+                "t": "eq",
+                "v": "TurnOn",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "SetTargetTemperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "AdjustTargetTemperature",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
-        "x": 490,
+        "outputs": 5,
+        "x": 410,
         "y": 300,
         "wires": [
             [
                 "68af64d4.10e094"
             ],
             [
+                "659da31a.b364dc"
+            ],
+            [
                 "974c3c12.cff5b"
             ],
             [
-                "f35f2c93.4e711",
-                "974c3c12.cff5b"
+                "3aa58585.c0f7f2",
+                "da172649.abae48",
+                "2a0db8c1.89508"
+            ],
+            [
+                "1484d855.3b0348"
             ]
         ]
     },
@@ -141,10 +119,10 @@
         "data": "",
         "dataType": "json",
         "mergecontext": "",
-        "output_location": "payload",
-        "output_location_type": "msg",
+        "output_location": "",
+        "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 710,
+        "x": 890,
         "y": 300,
         "wires": [
             [
@@ -166,11 +144,11 @@
         "data": "",
         "dataType": "json",
         "mergecontext": "",
-        "output_location": "payload",
-        "output_location_type": "msg",
+        "output_location": "",
+        "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 710,
-        "y": 200,
+        "x": 890,
+        "y": 180,
         "wires": [
             [
                 "f64a3c62.65a17"
@@ -203,11 +181,12 @@
         "customoutputs": [],
         "outputinitially": true,
         "state_type": "str",
-        "x": 240,
-        "y": 640,
+        "x": 180,
+        "y": 860,
         "wires": [
             [
-                "783be855.039a18"
+                "783be855.039a18",
+                "33bd3d68.ee6cba"
             ],
             []
         ]
@@ -221,48 +200,12 @@
         "outputs": 1,
         "noerr": 0,
         "x": 900,
-        "y": 640,
+        "y": 860,
         "wires": [
             [
-                "33ebd2b3.a8f4a6",
-                "3451fcc9.c506dc"
+                "dfef056b.6d95f"
             ]
         ]
-    },
-    {
-        "id": "3451fcc9.c506dc",
-        "type": "alexa-smart-home-v3-state",
-        "z": "19d5a0f2.130707",
-        "conf": "12932107.cee0af",
-        "device": "9074",
-        "name": "Heating",
-        "x": 1220,
-        "y": 640,
-        "wires": [],
-        "icon": "font-awesome/fa-cloud-upload"
-    },
-    {
-        "id": "8eeb31fb.f5cef",
-        "type": "alexa-smart-home-v3-resp",
-        "z": "19d5a0f2.130707",
-        "x": 1280,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "33ebd2b3.a8f4a6",
-        "type": "debug",
-        "z": "19d5a0f2.130707",
-        "name": "msg",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 1210,
-        "y": 720,
-        "wires": []
     },
     {
         "id": "3e87e6f8.51dd8a",
@@ -279,7 +222,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 1220,
+        "x": 1440,
         "y": 400,
         "wires": [
             [
@@ -306,8 +249,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
-        "y": 400,
+        "x": 390,
+        "y": 520,
         "wires": [
             []
         ]
@@ -331,7 +274,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1360,
+        "x": 1600,
         "y": 400,
         "wires": [
             []
@@ -345,7 +288,7 @@
         "rules": [
             {
                 "t": "set",
-                "p": "aknowledge",
+                "p": "acknowledge",
                 "pt": "msg",
                 "to": "true",
                 "tot": "bool"
@@ -356,13 +299,327 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 950,
+        "x": 1250,
         "y": 300,
         "wires": [
             [
-                "8eeb31fb.f5cef",
-                "3e87e6f8.51dd8a"
+                "3e87e6f8.51dd8a",
+                "93ffc066.e18468",
+                "79326ebb.3b9028"
             ]
         ]
+    },
+    {
+        "id": "93ffc066.e18468",
+        "type": "alexa-smart-home-v3-resp",
+        "z": "19d5a0f2.130707",
+        "x": 1520,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "659da31a.b364dc",
+        "type": "switch",
+        "z": "19d5a0f2.130707",
+        "name": "Mode",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OFF",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "HEAT",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 670,
+        "y": 260,
+        "wires": [
+            [
+                "68af64d4.10e094"
+            ],
+            [
+                "974c3c12.cff5b"
+            ]
+        ]
+    },
+    {
+        "id": "33bd3d68.ee6cba",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "Set point",
+        "rules": [
+            {
+                "t": "set",
+                "p": "setPoint",
+                "pt": "flow",
+                "to": "msg.data.event.new_state.attributes.temperature",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1484d855.3b0348",
+        "type": "function",
+        "z": "19d5a0f2.130707",
+        "name": "Delta",
+        "func": "flow.set(\"delta\", msg.payload);\nmsg.payload = flow.get(\"setPoint\") + msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 600,
+        "wires": [
+            [
+                "2a0db8c1.89508",
+                "edf1cf87.31c208",
+                "3d8e6a01.7ed09e",
+                "227b7539.3cdb62"
+            ]
+        ]
+    },
+    {
+        "id": "2a0db8c1.89508",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "Set point",
+        "rules": [
+            {
+                "t": "set",
+                "p": "setPoint",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "da172649.abae48",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Set temperature",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.home",
+        "data": "{\"hvac_mode\":\"heat\",\"temperature\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 900,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3aa58585.c0f7f2",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Heating ON",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "turn_on",
+        "entityId": "climate.home",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 890,
+        "y": 400,
+        "wires": [
+            [
+                "f64a3c62.65a17"
+            ]
+        ]
+    },
+    {
+        "id": "79326ebb.3b9028",
+        "type": "debug",
+        "z": "19d5a0f2.130707",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1430,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "dfef056b.6d95f",
+        "type": "alexa-smart-home-v3-state",
+        "z": "19d5a0f2.130707",
+        "conf": "12932107.cee0af",
+        "device": "9074",
+        "name": "Heating",
+        "x": 1380,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "edf1cf87.31c208",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Heating ON",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "turn_on",
+        "entityId": "climate.home",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 890,
+        "y": 640,
+        "wires": [
+            [
+                "226d4676.fdd8e2"
+            ]
+        ]
+    },
+    {
+        "id": "3d8e6a01.7ed09e",
+        "type": "delay",
+        "z": "19d5a0f2.130707",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 890,
+        "y": 720,
+        "wires": [
+            [
+                "c09c08ad.a5b738"
+            ]
+        ]
+    },
+    {
+        "id": "c09c08ad.a5b738",
+        "type": "api-call-service",
+        "z": "19d5a0f2.130707",
+        "name": "Set temperature",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.home",
+        "data": "{\"hvac_mode\":\"heat\",\"temperature\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1120,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "227b7539.3cdb62",
+        "type": "function",
+        "z": "19d5a0f2.130707",
+        "name": "State",
+        "func": "return {\n    acknowledge: true,\n    payload: {\n        state: {\n            thermostatSetPoint: msg.payload\n        }\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 870,
+        "y": 800,
+        "wires": [
+            [
+                "dfef056b.6d95f"
+            ]
+        ]
+    },
+    {
+        "id": "226d4676.fdd8e2",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "-Delta",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "delta",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1090,
+        "y": 600,
+        "wires": [
+            [
+                "f64a3c62.65a17"
+            ]
+        ]
+    },
+    {
+        "id": "b1b7584a.43ebc8",
+        "type": "debug",
+        "z": "19d5a0f2.130707",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 390,
+        "y": 140,
+        "wires": []
     }
 ]
