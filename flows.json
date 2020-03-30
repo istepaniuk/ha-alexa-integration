@@ -145,7 +145,7 @@
         "y": 480,
         "wires": [
             [
-                "efcd2bec.63725"
+                "54bd30fa.341f68"
             ]
         ]
     },
@@ -577,15 +577,16 @@
         "type": "mqtt in",
         "z": "19d5a0f2.130707",
         "name": "Wall Thermostat",
-        "topic": "control/thermostat",
+        "topic": "home.thermostat/evt.changed",
         "qos": "0",
         "datatype": "auto",
         "broker": "680eb849.f14aa",
         "x": 200,
-        "y": 1080,
+        "y": 1100,
         "wires": [
             [
-                "63edcbc5.f207fc"
+                "63edcbc5.f207fc",
+                "cc4f7d46.5be65"
             ]
         ]
     },
@@ -597,12 +598,12 @@
         "func": "msg.payload = (msg.payload / 2) + 5\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 370,
-        "y": 1080,
+        "x": 450,
+        "y": 1100,
         "wires": [
             [
-                "6775e2d9.b4eaac",
-                "7cf13af4.ca6984"
+                "7cf13af4.ca6984",
+                "6775e2d9.b4eaac"
             ]
         ]
     },
@@ -624,7 +625,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 1650,
-        "y": 1080,
+        "y": 1100,
         "wires": [
             []
         ]
@@ -637,12 +638,12 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "repeat": "1",
+        "repeat": "100",
         "crontab": "",
         "once": true,
         "onceDelay": "1",
-        "x": 210,
-        "y": 1000,
+        "x": 190,
+        "y": 1020,
         "wires": [
             [
                 "8d13b5a3.b284f8"
@@ -657,15 +658,15 @@
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
-        "rate": "10",
+        "rate": "100",
         "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 620,
-        "y": 1080,
+        "x": 880,
+        "y": 1100,
         "wires": [
             [
                 "f9fd7b29.4c1b88"
@@ -691,8 +692,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1060,
-        "y": 1080,
+        "x": 1320,
+        "y": 1100,
         "wires": [
             [
                 "7163aa9d.75969c"
@@ -707,8 +708,8 @@
         "func": "let knob = flow.get(\"knob\");\n\nif (flow.get(\"haKnob\") == knob)\n{\n  return null    \n}\n\nflow.set('haKnob', knob);\n\nreturn {\n    payload: knob\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 610,
-        "y": 1000,
+        "x": 870,
+        "y": 1020,
         "wires": [
             [
                 "f9fd7b29.4c1b88"
@@ -727,6 +728,13 @@
                 "pt": "flow",
                 "to": "payload",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "isKnobInhibited",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -734,10 +742,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 610,
-        "y": 1160,
+        "x": 880,
+        "y": 1180,
         "wires": [
-            []
+            [
+                "984e40.b51219c"
+            ]
         ]
     },
     {
@@ -749,7 +759,7 @@
         "qos": "0",
         "retain": "false",
         "broker": "680eb849.f14aa",
-        "x": 1620,
+        "x": 1640,
         "y": 480,
         "wires": []
     },
@@ -761,7 +771,7 @@
         "func": "let encoderValue = flow.get(\"setPoint\") * 2 - 10; \n\nreturn { \n    payload: encoderValue\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 1290,
+        "x": 1270,
         "y": 480,
         "wires": [
             [
@@ -797,15 +807,109 @@
         "id": "c08dc009.45c8c",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "Debug Wall",
+        "name": "Wall command",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1630,
+        "x": 1640,
         "y": 420,
+        "wires": []
+    },
+    {
+        "id": "cc4f7d46.5be65",
+        "type": "debug",
+        "z": "19d5a0f2.130707",
+        "name": "Wall event",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 470,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "54bd30fa.341f68",
+        "type": "function",
+        "z": "19d5a0f2.130707",
+        "name": "If knob is not inhibited",
+        "func": "if(flow.get(\"isKnobInhibited\") === true){\n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 900,
+        "y": 480,
+        "wires": [
+            [
+                "efcd2bec.63725"
+            ]
+        ]
+    },
+    {
+        "id": "b62b72f8.d61bf8",
+        "type": "change",
+        "z": "19d5a0f2.130707",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "isKnobInhibited",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1590,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "984e40.b51219c",
+        "type": "trigger",
+        "z": "19d5a0f2.130707",
+        "op1": "",
+        "op2": "inhibit = false",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 1300,
+        "y": 1180,
+        "wires": [
+            [
+                "b62b72f8.d61bf8",
+                "a4de9f78.6ea158"
+            ]
+        ]
+    },
+    {
+        "id": "a4de9f78.6ea158",
+        "type": "debug",
+        "z": "19d5a0f2.130707",
+        "name": "Inhibit",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1650,
+        "y": 1260,
         "wires": []
     }
 ]
