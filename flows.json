@@ -594,11 +594,11 @@
         "id": "63edcbc5.f207fc",
         "type": "function",
         "z": "19d5a0f2.130707",
-        "name": "to C",
+        "name": "Encoder to °C",
         "func": "msg.payload = (msg.payload / 2) + 5\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 450,
+        "x": 480,
         "y": 1100,
         "wires": [
             [
@@ -767,11 +767,11 @@
         "id": "efcd2bec.63725",
         "type": "function",
         "z": "19d5a0f2.130707",
-        "name": "C to Encoder",
+        "name": "°C to Encoder",
         "func": "let encoderValue = flow.get(\"setPoint\") * 2 - 10; \n\nreturn { \n    payload: encoderValue\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 1270,
+        "x": 1280,
         "y": 480,
         "wires": [
             [
@@ -909,7 +909,37 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 1650,
-        "y": 1260,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "11766614.ebd87a",
+        "type": "comment",
+        "z": "19d5a0f2.130707",
+        "name": "Alexa events",
+        "info": "",
+        "x": 110,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "77764ad.5a027b4",
+        "type": "comment",
+        "z": "19d5a0f2.130707",
+        "name": "HomeAssistant events",
+        "info": "",
+        "x": 140,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b5bd6730.a2135",
+        "type": "comment",
+        "z": "19d5a0f2.130707",
+        "name": "Wall thermostat events",
+        "info": "",
+        "x": 120,
+        "y": 960,
         "wires": []
     }
 ]
