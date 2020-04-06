@@ -27,26 +27,24 @@
         "webapiurl": "red.cb-net.co.uk"
     },
     {
-        "id": "680eb849.f14aa",
-        "type": "mqtt-broker",
+        "id": "241e9470.7dee34",
+        "type": "serial-port",
         "z": "",
-        "name": "localhost",
-        "broker": "localhost",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "compatmode": false,
-        "keepalive": "120",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": ""
+        "serialport": "/dev/prolific",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\r",
+        "responsetimeout": "1000"
     },
     {
         "id": "53642155.d6438",
@@ -369,7 +367,7 @@
         "acknowledge": false,
         "name": "Set heating",
         "topic": "",
-        "x": 190,
+        "x": 180,
         "y": 840,
         "wires": [
             [
@@ -573,24 +571,6 @@
         "wires": []
     },
     {
-        "id": "b44c5d0a.4f6f9",
-        "type": "mqtt in",
-        "z": "19d5a0f2.130707",
-        "name": "Wall Thermostat",
-        "topic": "home.thermostat/evt.changed",
-        "qos": "0",
-        "datatype": "auto",
-        "broker": "680eb849.f14aa",
-        "x": 200,
-        "y": 1100,
-        "wires": [
-            [
-                "63edcbc5.f207fc",
-                "cc4f7d46.5be65"
-            ]
-        ]
-    },
-    {
         "id": "63edcbc5.f207fc",
         "type": "function",
         "z": "19d5a0f2.130707",
@@ -598,8 +578,8 @@
         "func": "msg.payload = (msg.payload / 2) + 5\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 480,
-        "y": 1100,
+        "x": 720,
+        "y": 1120,
         "wires": [
             [
                 "7cf13af4.ca6984",
@@ -625,29 +605,9 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 1650,
-        "y": 1100,
+        "y": 1120,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "8dee06c7.291fc",
-        "type": "inject",
-        "z": "19d5a0f2.130707",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "100",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "x": 190,
-        "y": 1020,
-        "wires": [
-            [
-                "8d13b5a3.b284f8"
-            ]
         ]
     },
     {
@@ -658,15 +618,15 @@
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
-        "rate": "100",
+        "rate": "5",
         "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 880,
-        "y": 1100,
+        "x": 970,
+        "y": 1120,
         "wires": [
             [
                 "f9fd7b29.4c1b88"
@@ -693,7 +653,7 @@
         "to": "",
         "reg": false,
         "x": 1320,
-        "y": 1100,
+        "y": 1120,
         "wires": [
             [
                 "7163aa9d.75969c"
@@ -708,8 +668,8 @@
         "func": "let knob = flow.get(\"knob\");\n\nif (flow.get(\"haKnob\") == knob)\n{\n  return null    \n}\n\nflow.set('haKnob', knob);\n\nreturn {\n    payload: knob\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 870,
-        "y": 1020,
+        "x": 970,
+        "y": 1040,
         "wires": [
             [
                 "f9fd7b29.4c1b88"
@@ -742,26 +702,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 880,
-        "y": 1180,
+        "x": 980,
+        "y": 1200,
         "wires": [
             [
                 "984e40.b51219c"
             ]
         ]
-    },
-    {
-        "id": "27c07c4.5bad504",
-        "type": "mqtt out",
-        "z": "19d5a0f2.130707",
-        "name": "Wall thermostat",
-        "topic": "home.thermostat/cmd.set",
-        "qos": "0",
-        "retain": "false",
-        "broker": "680eb849.f14aa",
-        "x": 1640,
-        "y": 480,
-        "wires": []
     },
     {
         "id": "efcd2bec.63725",
@@ -798,8 +745,8 @@
         "y": 480,
         "wires": [
             [
-                "27c07c4.5bad504",
-                "c08dc009.45c8c"
+                "c08dc009.45c8c",
+                "504eee92.58eb48"
             ]
         ]
     },
@@ -829,8 +776,8 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 470,
-        "y": 1180,
+        "x": 450,
+        "y": 1200,
         "wires": []
     },
     {
@@ -869,7 +816,7 @@
         "to": "",
         "reg": false,
         "x": 1590,
-        "y": 1180,
+        "y": 1200,
         "wires": [
             []
         ]
@@ -889,7 +836,7 @@
         "bytopic": "all",
         "name": "",
         "x": 1300,
-        "y": 1180,
+        "y": 1200,
         "wires": [
             [
                 "b62b72f8.d61bf8",
@@ -909,7 +856,7 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 1650,
-        "y": 1240,
+        "y": 1260,
         "wires": []
     },
     {
@@ -938,8 +885,72 @@
         "z": "19d5a0f2.130707",
         "name": "Wall thermostat events",
         "info": "",
-        "x": 120,
-        "y": 960,
+        "x": 140,
+        "y": 1020,
         "wires": []
+    },
+    {
+        "id": "a5dbe358.0588d8",
+        "type": "trigger",
+        "z": "19d5a0f2.130707",
+        "op1": "",
+        "op2": "inhibit = false",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "5",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 700,
+        "y": 1040,
+        "wires": [
+            [
+                "8d13b5a3.b284f8"
+            ]
+        ]
+    },
+    {
+        "id": "e9794c80.394bc8",
+        "type": "serial in",
+        "z": "19d5a0f2.130707",
+        "name": "Thermostat RX",
+        "serial": "241e9470.7dee34",
+        "x": 200,
+        "y": 1120,
+        "wires": [
+            [
+                "27e0aa1.cf09456",
+                "cc4f7d46.5be65"
+            ]
+        ]
+    },
+    {
+        "id": "504eee92.58eb48",
+        "type": "serial out",
+        "z": "19d5a0f2.130707",
+        "name": "Thermostat TX",
+        "serial": "241e9470.7dee34",
+        "x": 1640,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "27e0aa1.cf09456",
+        "type": "function",
+        "z": "19d5a0f2.130707",
+        "name": "Parse",
+        "func": "return {\n    payload: msg.payload.replace(/\\D/g,'')\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 1120,
+        "wires": [
+            [
+                "a5dbe358.0588d8",
+                "63edcbc5.f207fc"
+            ]
+        ]
     }
 ]
