@@ -1250,9 +1250,9 @@
         "z": "f9e8465e.4242b",
         "name": "",
         "setpoint": "16",
-        "pb": "4",
+        "pb": "2",
         "ti": "3600",
-        "td": "700",
+        "td": "350",
         "integral_default": "0",
         "smooth_factor": "3",
         "max_interval": "100",
@@ -1351,7 +1351,7 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1150,
+        "x": 1230,
         "y": 120,
         "wires": [
             []
@@ -1485,24 +1485,8 @@
         "y": 560,
         "wires": [
             [
-                "fb438479.99bde",
-                "fbdf4aa.3b22038"
-            ]
-        ]
-    },
-    {
-        "id": "c32ea607.220ff",
-        "type": "function",
-        "z": "f9e8465e.4242b",
-        "name": "water_temp",
-        "func": "if(!msg.payload.startsWith(\"=== boiler_flow_water_temp\")){\n    return null;    \n}\n\nreturn {\n    topic: \"water_temp\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 910,
-        "y": 500,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
+                "c32ea607.220ff",
+                "e03b91f0.7fe7f"
             ]
         ]
     },
@@ -1511,14 +1495,14 @@
         "type": "function",
         "z": "f9e8465e.4242b",
         "name": "modulation_level",
-        "func": "if(!msg.payload.startsWith(\"=== modulation_level\")){\n    return null;    \n}\n\nreturn {\n    topic: \"modulation_level\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
+        "func": "if(!msg.payload.startsWith(\"== modulation_level\")){\n    return null;    \n}\n\nreturn {\n    topic: \"modulation_level\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 890,
-        "y": 560,
+        "x": 580,
+        "y": 540,
         "wires": [
             [
-                "ac42ada2.2b9368"
+                "3225e6bb.57900a"
             ]
         ]
     },
@@ -1528,7 +1512,7 @@
         "z": "f9e8465e.4242b",
         "name": "OpenTherm TX",
         "serial": "463b4f94.ce5448",
-        "x": 1160,
+        "x": 1240,
         "y": 320,
         "wires": []
     },
@@ -1537,14 +1521,15 @@
         "type": "function",
         "z": "f9e8465e.4242b",
         "name": "on: > 40",
-        "func": "if(msg.payload > 40){\n    return {\n        payload: \"on \" + msg.payload + \" 100\"\n    };\n}else{\n    return {\n        payload: \"off\"\n    };\n}\n",
+        "func": "if(msg.payload > 40){\n    return {\n        payload: \"on \" + msg.payload.toFixed(1)\n    };\n}else{\n    return {\n        payload: \"off\"\n    };\n}\n",
         "outputs": 1,
         "noerr": 0,
         "x": 900,
         "y": 320,
         "wires": [
             [
-                "e11f165e.79a418"
+                "e11f165e.79a418",
+                "b60fdda4.663518"
             ]
         ]
     },
@@ -1566,8 +1551,8 @@
                 "value": ""
             }
         ],
-        "updateinterval": "61",
-        "updateIntervalUnits": "seconds",
+        "updateinterval": "1",
+        "updateIntervalUnits": "minutes",
         "outputinitially": true,
         "outputonchanged": false,
         "entity_id": "sensor.living_room_temperature",
@@ -1603,8 +1588,8 @@
                 "value": ""
             }
         ],
-        "updateinterval": "60",
-        "updateIntervalUnits": "seconds",
+        "updateinterval": "1",
+        "updateIntervalUnits": "minutes",
         "outputinitially": true,
         "outputonchanged": false,
         "entity_id": "sensor.outside_temperature",
@@ -1639,7 +1624,7 @@
                 "value": ""
             }
         ],
-        "updateinterval": "62",
+        "updateinterval": "30",
         "updateIntervalUnits": "seconds",
         "outputinitially": true,
         "outputonchanged": true,
@@ -1658,30 +1643,38 @@
         ]
     },
     {
-        "id": "fb438479.99bde",
-        "type": "delay",
+        "id": "b60fdda4.663518",
+        "type": "debug",
         "z": "f9e8465e.4242b",
         "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "60",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "x": 500,
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1230,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "c32ea607.220ff",
+        "type": "function",
+        "z": "f9e8465e.4242b",
+        "name": "water_temp",
+        "func": "if(!msg.payload.startsWith(\"== boiler_flow_water_temp\")){\n    return null;    \n}\n\nreturn {\n    topic: \"water_temp\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
         "y": 500,
         "wires": [
             [
-                "c32ea607.220ff"
+                "e54d81d6.13612"
             ]
         ]
     },
     {
-        "id": "fbdf4aa.3b22038",
+        "id": "e54d81d6.13612",
         "type": "delay",
         "z": "f9e8465e.4242b",
         "name": "",
@@ -1689,17 +1682,40 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "60",
-        "rateUnits": "second",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
         "randomFirst": "1",
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 500,
-        "y": 560,
+        "x": 910,
+        "y": 500,
         "wires": [
             [
-                "e03b91f0.7fe7f"
+                "ac42ada2.2b9368"
+            ]
+        ]
+    },
+    {
+        "id": "3225e6bb.57900a",
+        "type": "delay",
+        "z": "f9e8465e.4242b",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 910,
+        "y": 540,
+        "wires": [
+            [
+                "ac42ada2.2b9368"
             ]
         ]
     }
