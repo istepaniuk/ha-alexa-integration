@@ -939,7 +939,7 @@
         "type": "debug",
         "z": "19d5a0f2.130707",
         "name": "Wall event",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1351,7 +1351,7 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1230,
+        "x": 1150,
         "y": 120,
         "wires": [
             []
@@ -1482,7 +1482,7 @@
         "name": "OpenTherm RX",
         "serial": "463b4f94.ce5448",
         "x": 140,
-        "y": 560,
+        "y": 540,
         "wires": [
             [
                 "c32ea607.220ff",
@@ -1499,7 +1499,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 580,
-        "y": 540,
+        "y": 560,
         "wires": [
             [
                 "3225e6bb.57900a"
@@ -1512,7 +1512,7 @@
         "z": "f9e8465e.4242b",
         "name": "OpenTherm TX",
         "serial": "463b4f94.ce5448",
-        "x": 1240,
+        "x": 1160,
         "y": 320,
         "wires": []
     },
@@ -1520,7 +1520,7 @@
         "id": "53d69b5f.3dfacc",
         "type": "function",
         "z": "f9e8465e.4242b",
-        "name": "on: > 40",
+        "name": "on X / off",
         "func": "if(msg.payload > 40){\n    return {\n        payload: \"on \" + msg.payload.toFixed(1)\n    };\n}else{\n    return {\n        payload: \"off\"\n    };\n}\n",
         "outputs": 1,
         "noerr": 0,
@@ -1624,8 +1624,8 @@
                 "value": ""
             }
         ],
-        "updateinterval": "30",
-        "updateIntervalUnits": "seconds",
+        "updateinterval": "1",
+        "updateIntervalUnits": "minutes",
         "outputinitially": true,
         "outputonchanged": true,
         "entity_id": "climate.home",
@@ -1646,15 +1646,15 @@
         "id": "b60fdda4.663518",
         "type": "debug",
         "z": "f9e8465e.4242b",
-        "name": "",
-        "active": false,
+        "name": "Debug Output",
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 1230,
-        "y": 420,
+        "x": 1150,
+        "y": 280,
         "wires": []
     },
     {
@@ -1666,7 +1666,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 570,
-        "y": 500,
+        "y": 520,
         "wires": [
             [
                 "e54d81d6.13612"
@@ -1689,7 +1689,7 @@
         "randomUnits": "seconds",
         "drop": true,
         "x": 910,
-        "y": 500,
+        "y": 520,
         "wires": [
             [
                 "ac42ada2.2b9368"
@@ -1704,7 +1704,7 @@
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
-        "rate": "1",
+        "rate": "2",
         "nbRateUnits": "1",
         "rateUnits": "minute",
         "randomFirst": "1",
@@ -1712,7 +1712,7 @@
         "randomUnits": "seconds",
         "drop": true,
         "x": 910,
-        "y": 540,
+        "y": 560,
         "wires": [
             [
                 "ac42ada2.2b9368"
