@@ -83,16 +83,6 @@
         "responsetimeout": "1000"
     },
     {
-        "id": "f6b21c86.bc2958",
-        "type": "ui_group",
-        "z": "",
-        "name": "PID",
-        "tab": "4e05386b.c2a6c",
-        "disp": true,
-        "width": "20",
-        "collapse": false
-    },
-    {
         "id": "4e05386b.c2a6c",
         "type": "ui_tab",
         "z": "",
@@ -216,6 +206,18 @@
         "responsetimeout": "10000"
     },
     {
+        "id": "9b05d6f.f65c5a8",
+        "type": "influxdb",
+        "z": "",
+        "hostname": "192.168.0.250",
+        "port": "8086",
+        "protocol": "http",
+        "database": "home_assistant",
+        "name": "Influx",
+        "usetls": false,
+        "tls": ""
+    },
+    {
         "id": "53642155.d6438",
         "type": "alexa-smart-home-v3",
         "z": "19d5a0f2.130707",
@@ -238,7 +240,7 @@
         "id": "ed120590.04b7e",
         "type": "trigger-state",
         "z": "19d5a0f2.130707",
-        "name": "HA Thermostat",
+        "name": "HA thermostat event",
         "server": "bfed26e3.9fa28",
         "exposeToHomeAssistant": false,
         "haConfig": [
@@ -260,7 +262,7 @@
         "customoutputs": [],
         "outputinitially": true,
         "state_type": "str",
-        "x": 200,
+        "x": 220,
         "y": 120,
         "wires": [
             [
@@ -363,7 +365,7 @@
         "id": "b1b7584a.43ebc8",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "Debug Cmd",
+        "name": "Alexa cmd",
         "active": false,
         "tosidebar": true,
         "console": false,
@@ -447,14 +449,14 @@
         "id": "2cf5c916.6c7da6",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "Debug Ack",
+        "name": "Alexa ack",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1630,
+        "x": 1620,
         "y": 600,
         "wires": []
     },
@@ -728,7 +730,7 @@
         "id": "aae45713.75d65",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "Debug State",
+        "name": "HA set state",
         "active": false,
         "tosidebar": true,
         "console": false,
@@ -923,7 +925,7 @@
         "id": "c08dc009.45c8c",
         "type": "debug",
         "z": "19d5a0f2.130707",
-        "name": "Wall command",
+        "name": "Thermostat TX",
         "active": false,
         "tosidebar": true,
         "console": false,
@@ -1259,37 +1261,10 @@
         "enable": "1",
         "disabled_op": "0",
         "x": 490,
-        "y": 260,
+        "y": 240,
         "wires": [
             [
                 "bf74138c.78c37"
-            ]
-        ]
-    },
-    {
-        "id": "407133fe.b79cf4",
-        "type": "change",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "output",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 260,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
             ]
         ]
     },
@@ -1305,56 +1280,13 @@
         "round": false,
         "property": "payload",
         "name": "Target water temp.",
-        "x": 690,
-        "y": 260,
+        "x": 670,
+        "y": 240,
         "wires": [
             [
-                "407133fe.b79cf4",
-                "53d69b5f.3dfacc"
+                "53d69b5f.3dfacc",
+                "3668ba07.b3b426"
             ]
-        ]
-    },
-    {
-        "id": "ac42ada2.2b9368",
-        "type": "ui_chart",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "group": "f6b21c86.bc2958",
-        "order": 0,
-        "width": "20",
-        "height": "16",
-        "label": "Temperatures",
-        "chartType": "line",
-        "legend": "true",
-        "xformat": "HH:mm",
-        "interpolate": "monotone",
-        "nodata": "no data",
-        "dot": true,
-        "ymin": "0",
-        "ymax": "100",
-        "removeOlder": "1",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "86400",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#cf0005",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "useOldStyle": false,
-        "outputs": 1,
-        "x": 1150,
-        "y": 120,
-        "wires": [
-            []
         ]
     },
     {
@@ -1366,112 +1298,11 @@
         "outputs": 1,
         "noerr": 0,
         "x": 300,
-        "y": 180,
+        "y": 140,
         "wires": [
             [
                 "ca3d13aa.24e0d",
-                "30969cd6.3e5be4"
-            ]
-        ]
-    },
-    {
-        "id": "30969cd6.3e5be4",
-        "type": "change",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "setpoint",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 180,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
-            ]
-        ]
-    },
-    {
-        "id": "a73e08e0.ed7a6",
-        "type": "change",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "actual",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 380,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
-            ]
-        ]
-    },
-    {
-        "id": "41b5db9c.649284",
-        "type": "inject",
-        "z": "f9e8465e.4242b",
-        "name": "Clear chart",
-        "topic": "",
-        "payload": "[]",
-        "payloadType": "json",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "0",
-        "x": 910,
-        "y": 120,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
-            ]
-        ]
-    },
-    {
-        "id": "3d2c15d2.3732e2",
-        "type": "change",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "outdoors",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 440,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
+                "87e87cd.eff97"
             ]
         ]
     },
@@ -1482,7 +1313,7 @@
         "name": "OpenTherm RX",
         "serial": "463b4f94.ce5448",
         "x": 140,
-        "y": 540,
+        "y": 580,
         "wires": [
             [
                 "c32ea607.220ff",
@@ -1498,11 +1329,11 @@
         "func": "if(!msg.payload.startsWith(\"== modulation_level\")){\n    return null;    \n}\n\nreturn {\n    topic: \"modulation_level\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 580,
-        "y": 560,
+        "x": 570,
+        "y": 620,
         "wires": [
             [
-                "3225e6bb.57900a"
+                "914de7e7.967a98"
             ]
         ]
     },
@@ -1512,8 +1343,8 @@
         "z": "f9e8465e.4242b",
         "name": "OpenTherm TX",
         "serial": "463b4f94.ce5448",
-        "x": 1160,
-        "y": 320,
+        "x": 1140,
+        "y": 380,
         "wires": []
     },
     {
@@ -1562,47 +1393,11 @@
         "halt_if_compare": "is",
         "outputs": 1,
         "x": 180,
-        "y": 380,
+        "y": 460,
         "wires": [
             [
                 "ca3d13aa.24e0d",
-                "a73e08e0.ed7a6"
-            ]
-        ]
-    },
-    {
-        "id": "8352c164.975d18",
-        "type": "poll-state",
-        "z": "f9e8465e.4242b",
-        "name": "HA Outdoors Temperature",
-        "server": "bfed26e3.9fa28",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "updateinterval": "1",
-        "updateIntervalUnits": "minutes",
-        "outputinitially": true,
-        "outputonchanged": false,
-        "entity_id": "sensor.outside_temperature",
-        "state_type": "num",
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "x": 170,
-        "y": 440,
-        "wires": [
-            [
-                "3d2c15d2.3732e2"
+                "cd1cb9a7.8e531"
             ]
         ]
     },
@@ -1635,7 +1430,7 @@
         "halt_if_compare": "is",
         "outputs": 1,
         "x": 130,
-        "y": 180,
+        "y": 140,
         "wires": [
             [
                 "d9545f60.bad498"
@@ -1646,15 +1441,15 @@
         "id": "b60fdda4.663518",
         "type": "debug",
         "z": "f9e8465e.4242b",
-        "name": "Debug Output",
+        "name": "OpenTherm TX",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 1150,
-        "y": 280,
+        "x": 1140,
+        "y": 320,
         "wires": []
     },
     {
@@ -1665,58 +1460,77 @@
         "func": "if(!msg.payload.startsWith(\"== boiler_flow_water_temp\")){\n    return null;    \n}\n\nreturn {\n    topic: \"water_temp\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
         "outputs": 1,
         "noerr": 0,
-        "x": 570,
-        "y": 520,
-        "wires": [
-            [
-                "e54d81d6.13612"
-            ]
-        ]
-    },
-    {
-        "id": "e54d81d6.13612",
-        "type": "delay",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "x": 910,
-        "y": 520,
-        "wires": [
-            [
-                "ac42ada2.2b9368"
-            ]
-        ]
-    },
-    {
-        "id": "3225e6bb.57900a",
-        "type": "delay",
-        "z": "f9e8465e.4242b",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "2",
-        "nbRateUnits": "1",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "x": 910,
+        "x": 550,
         "y": 560,
         "wires": [
             [
-                "ac42ada2.2b9368"
+                "ca1fe49d.ce839"
             ]
         ]
+    },
+    {
+        "id": "ca1fe49d.ce839",
+        "type": "influxdb out",
+        "z": "f9e8465e.4242b",
+        "influxdb": "9b05d6f.f65c5a8",
+        "name": "",
+        "measurement": "nr.boiler.water_temp",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "x": 950,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "914de7e7.967a98",
+        "type": "influxdb out",
+        "z": "f9e8465e.4242b",
+        "influxdb": "9b05d6f.f65c5a8",
+        "name": "",
+        "measurement": "nr.boiler.modulation_level",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "x": 970,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "3668ba07.b3b426",
+        "type": "influxdb out",
+        "z": "f9e8465e.4242b",
+        "influxdb": "9b05d6f.f65c5a8",
+        "name": "",
+        "measurement": "nr.heating.target_water_temp",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "x": 980,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "87e87cd.eff97",
+        "type": "influxdb out",
+        "z": "f9e8465e.4242b",
+        "influxdb": "9b05d6f.f65c5a8",
+        "name": "",
+        "measurement": "nr.heating.set_point",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "x": 950,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "cd1cb9a7.8e531",
+        "type": "influxdb out",
+        "z": "f9e8465e.4242b",
+        "influxdb": "9b05d6f.f65c5a8",
+        "name": "",
+        "measurement": "nr.heating.current_temperature",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "x": 990,
+        "y": 460,
+        "wires": []
     }
 ]
