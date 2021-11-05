@@ -1615,7 +1615,8 @@
             [],
             [],
             [
-                "d0d696bb.2bbc08"
+                "d0d696bb.2bbc08",
+                "8c52d858.e66ae"
             ]
         ]
     },
@@ -1636,8 +1637,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1070,
-        "y": 140,
+        "x": 1350,
+        "y": 100,
         "wires": [
             []
         ]
@@ -1646,33 +1647,61 @@
         "id": "d0d696bb.2bbc08",
         "type": "switch",
         "z": "374f7c93.e65914",
-        "name": "On/Off",
+        "name": "On/Hold/Release | Off/Hold/Release",
         "property": "payload.event.event",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
                 "v": "1002",
-                "vt": "str"
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1001",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1003",
+                "vt": "num"
             },
             {
                 "t": "eq",
                 "v": "2002",
-                "vt": "str"
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2001",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2003",
+                "vt": "num"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
-        "x": 810,
+        "outputs": 6,
+        "x": 910,
         "y": 300,
         "wires": [
             [
                 "5824a24a.a4724c"
             ],
             [
+                "fef02c3b.442c28"
+            ],
+            [],
+            [
                 "8cdc95c9.3d8dc"
-            ]
+            ],
+            [
+                "70424785.21d92"
+            ],
+            []
         ]
     },
     {
@@ -1692,8 +1721,68 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1070,
+        "x": 1350,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8c52d858.e66ae",
+        "type": "debug",
+        "z": "374f7c93.e65914",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 850,
         "y": 460,
+        "wires": []
+    },
+    {
+        "id": "70424785.21d92",
+        "type": "api-call-service",
+        "z": "374f7c93.e65914",
+        "name": "B-",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.cave_desk",
+        "data": "{\"brightness_step\": -20}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1350,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fef02c3b.442c28",
+        "type": "api-call-service",
+        "z": "374f7c93.e65914",
+        "name": "B+",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.cave_desk",
+        "data": "{\"brightness_step\":20}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1350,
+        "y": 200,
         "wires": [
             []
         ]
