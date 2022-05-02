@@ -16,43 +16,90 @@
     {
         "id": "374f7c93.e65914",
         "type": "tab",
-        "label": "Lights test",
+        "label": "Cave lights",
         "disabled": false,
-        "info": ""
+        "info": "",
+        "env": []
     },
     {
-        "id": "ea46506a.b17c18",
-        "type": "subflow",
-        "name": "Process Simulation",
+        "id": "42c3e6b533752f23",
+        "type": "tab",
+        "label": "Bathroom lights",
+        "disabled": false,
         "info": "",
-        "in": [
+        "env": []
+    },
+    {
+        "id": "df7063e97c28a022",
+        "type": "tab",
+        "label": "Front Door",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e73d20026d477284",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d21bd239b269b598",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2bd693293624bec5",
+        "type": "subflow",
+        "name": "ha light switch",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
             {
-                "x": 37,
-                "y": 103,
+                "x": 1200,
+                "y": 220,
                 "wires": [
                     {
-                        "id": "e62ba65e.ac5d58"
+                        "id": "095f3280930fa083",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1200,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "095f3280930fa083",
+                        "port": 3
                     }
                 ]
             }
         ],
-        "out": [
+        "env": [
             {
-                "x": 728.5,
-                "y": 294,
-                "wires": [
-                    {
-                        "id": "b07dce1d.e1698",
-                        "port": 0
-                    }
-                ]
+                "name": "SWITCH_ID",
+                "type": "str",
+                "value": ""
             }
-        ]
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "outputLabels": [
+            "On",
+            "Off"
+        ],
+        "icon": "node-red-dashboard/ui_switch.png"
     },
     {
         "id": "bfed26e3.9fa28",
         "type": "server",
-        "z": "",
         "name": "Home Assistant",
         "legacy": false,
         "addon": false,
@@ -64,7 +111,6 @@
     {
         "id": "12932107.cee0af",
         "type": "alexa-smart-home-v3-conf",
-        "z": "",
         "username": "rsgvv",
         "mqttserver": "mq-red.cb-net.co.uk",
         "webapiurl": "red.cb-net.co.uk"
@@ -72,7 +118,6 @@
     {
         "id": "241e9470.7dee34",
         "type": "serial-port",
-        "z": "",
         "serialport": "/dev/prolific",
         "serialbaud": "9600",
         "databits": "8",
@@ -92,7 +137,6 @@
     {
         "id": "4e05386b.c2a6c",
         "type": "ui_tab",
-        "z": "",
         "name": "Home",
         "icon": "dashboard"
     },
@@ -195,7 +239,6 @@
     {
         "id": "463b4f94.ce5448",
         "type": "serial-port",
-        "z": "",
         "serialport": "/dev/cp210x",
         "serialbaud": "115200",
         "databits": "8",
@@ -215,7 +258,6 @@
     {
         "id": "9b05d6f.f65c5a8",
         "type": "influxdb",
-        "z": "",
         "hostname": "192.168.178.250",
         "port": "8086",
         "protocol": "http",
@@ -223,6 +265,114 @@
         "name": "Influx",
         "usetls": false,
         "tls": ""
+    },
+    {
+        "id": "06c3c0e6aa9bb597",
+        "type": "server-events",
+        "z": "2bd693293624bec5",
+        "name": "DeConz events",
+        "server": "bfed26e3.9fa28",
+        "event_type": "deconz_event",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 220,
+        "y": 260,
+        "wires": [
+            [
+                "276d4ba42eeee67c"
+            ]
+        ]
+    },
+    {
+        "id": "276d4ba42eeee67c",
+        "type": "switch",
+        "z": "2bd693293624bec5",
+        "name": "",
+        "property": "payload.event.id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SWITCH_ID",
+                "vt": "env"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 450,
+        "y": 260,
+        "wires": [
+            [
+                "095f3280930fa083"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "095f3280930fa083",
+        "type": "switch",
+        "z": "2bd693293624bec5",
+        "name": "On/Hold/Release | Off/Hold/Release",
+        "property": "payload.event.event",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1002",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1001",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1003",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2002",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2001",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2003",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 770,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
     },
     {
         "id": "53642155.d6438",
@@ -289,6 +439,9 @@
         "func": "let newState = msg.data.event.new_state.attributes;\n\nreturn {\n    acknowledge: true,\n    payload: {\n        state: {\n            thermostatSetPoint: newState.temperature\n        }\n    }\n};",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 910,
         "y": 120,
         "wires": [
@@ -713,6 +866,9 @@
         "func": "return {\n    acknowledge: true,\n    payload: {\n        state: {\n            power: \"OFF\"\n        }\n    }\n};",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 860,
         "y": 300,
         "wires": [
@@ -803,6 +959,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
+        "outputs": 1,
         "x": 970,
         "y": 1120,
         "wires": [
@@ -919,6 +1076,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
+        "allowrate": false,
+        "outputs": 1,
         "x": 1450,
         "y": 480,
         "wires": [
@@ -1003,6 +1162,7 @@
         "id": "984e40.b51219c",
         "type": "trigger",
         "z": "19d5a0f2.130707",
+        "name": "",
         "op1": "",
         "op2": "inhibit = false",
         "op1type": "nul",
@@ -1012,7 +1172,7 @@
         "units": "s",
         "reset": "",
         "bytopic": "all",
-        "name": "",
+        "outputs": 1,
         "x": 1300,
         "y": 1200,
         "wires": [
@@ -1071,6 +1231,7 @@
         "id": "a5dbe358.0588d8",
         "type": "trigger",
         "z": "19d5a0f2.130707",
+        "name": "",
         "op1": "",
         "op2": "inhibit = false",
         "op1type": "nul",
@@ -1080,7 +1241,7 @@
         "units": "s",
         "reset": "",
         "bytopic": "all",
-        "name": "",
+        "outputs": 1,
         "x": 700,
         "y": 1040,
         "wires": [
@@ -1095,7 +1256,7 @@
         "z": "19d5a0f2.130707",
         "name": "Thermostat RX",
         "serial": "241e9470.7dee34",
-        "x": 200,
+        "x": 180,
         "y": 1120,
         "wires": [
             [
@@ -1132,128 +1293,6 @@
         ]
     },
     {
-        "id": "92983d1a.e780d",
-        "type": "function",
-        "z": "ea46506a.b17c18",
-        "name": "30 sec RC + 20",
-        "func": "// Applies a simple RC low pass filter to incoming payload values\nvar tc = 30*1000;       // time constant in milliseconds\n\nvar lastValue = context.get('lastValue');\nif (typeof lastValue == \"undefined\") lastValue = msg.payload;\nvar lastTime = context.get('lastTime') || null;\nvar now = new Date();\nvar currentValue = msg.payload;\nif (lastTime === null) {\n    // first time through\n    newValue = currentValue;\n} else {\n    var dt = now - lastTime;\n    var newValue;\n    \n    if (dt > 0) {\n        var dtotc = dt / tc;\n        newValue = lastValue * (1 - dtotc) + currentValue * dtotc;\n    } else {\n        // no time has elapsed leave output the same as last time\n        newValue = lastValue;\n    }\n}\ncontext.set('lastValue', newValue);\ncontext.set('lastTime', now);\n\nmsg.payload = newValue + 20;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 626.5,
-        "y": 207,
-        "wires": [
-            [
-                "b07dce1d.e1698"
-            ]
-        ]
-    },
-    {
-        "id": "f7b89c2f.d0709",
-        "type": "inject",
-        "z": "ea46506a.b17c18",
-        "name": "Inject -0.2 at start",
-        "topic": "",
-        "payload": "-0.2",
-        "payloadType": "num",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "x": 134.5,
-        "y": 30,
-        "wires": [
-            [
-                "e62ba65e.ac5d58"
-            ]
-        ]
-    },
-    {
-        "id": "e8f8d785.f1ef9",
-        "type": "function",
-        "z": "ea46506a.b17c18",
-        "name": "10 sec RC",
-        "func": "// Applies a simple RC low pass filter to incoming payload values\nvar tc = 10*1000;       // time constant in milliseconds\n\nvar lastValue = context.get('lastValue');\nif (typeof lastValue == \"undefined\") lastValue = msg.payload;\nvar lastTime = context.get('lastTime') || null;\nvar now = new Date();\nvar currentValue = msg.payload;\nif (lastTime === null) {\n    // first time through\n    newValue = currentValue;\n} else {\n    var dt = now - lastTime;\n    var newValue;\n    \n    if (dt > 0) {\n        var dtotc = dt / tc;\n        newValue = lastValue * (1 - dtotc) + currentValue * dtotc;\n    } else {\n        // no time has elapsed leave output the same as last time\n        newValue = lastValue;\n    }\n}\ncontext.set('lastValue', newValue);\ncontext.set('lastTime', now);\n\nmsg.payload = newValue;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 451,
-        "y": 207,
-        "wires": [
-            [
-                "92983d1a.e780d"
-            ]
-        ]
-    },
-    {
-        "id": "e62ba65e.ac5d58",
-        "type": "delay",
-        "z": "ea46506a.b17c18",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "1",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 268,
-        "y": 104,
-        "wires": [
-            [
-                "82471bfb.b2c3f"
-            ]
-        ]
-    },
-    {
-        "id": "483a571b.602298",
-        "type": "function",
-        "z": "ea46506a.b17c18",
-        "name": "2 msg transport delay",
-        "func": "// stores messages in a fifo until the specified number have been received, \n// then releases them as new messages are received.\n// during the filling phase the earliest message is passed on each time \n// a message is received, but it is also left in the fifo\nvar fifoMaxLength = 2;\nvar fifo = context.get('fifo') || [];\n// push the new message onto the top of the array, messages are shifted down and\n// drop off the front\nvar length = fifo.push(msg);  // returns new length\nif (length > fifoMaxLength) {\n    newMsg = fifo.shift();\n} else {\n    // not full yet, make a copy of the msg and pass it on\n    var newMsg = JSON.parse(JSON.stringify(fifo[0]));\n}\ncontext.set('fifo', fifo);\nreturn newMsg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 258,
-        "y": 208,
-        "wires": [
-            [
-                "e8f8d785.f1ef9"
-            ]
-        ]
-    },
-    {
-        "id": "b07dce1d.e1698",
-        "type": "function",
-        "z": "ea46506a.b17c18",
-        "name": "Clear all except payload",
-        "func": "msg2 = {payload: msg.payload};\nreturn msg2;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 545,
-        "y": 293,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "82471bfb.b2c3f",
-        "type": "range",
-        "z": "ea46506a.b17c18",
-        "minin": "0",
-        "maxin": "1",
-        "minout": "0",
-        "maxout": "100",
-        "action": "scale",
-        "round": false,
-        "name": "",
-        "x": 87,
-        "y": 208,
-        "wires": [
-            [
-                "483a571b.602298"
-            ]
-        ]
-    },
-    {
         "id": "ca3d13aa.24e0d",
         "type": "PID",
         "z": "f9e8465e.4242b",
@@ -1282,7 +1321,7 @@
         "minin": "0",
         "maxin": "1",
         "minout": "40",
-        "maxout": "60",
+        "maxout": "56",
         "action": "scale",
         "round": false,
         "property": "payload",
@@ -1468,6 +1507,9 @@
         "func": "if(!msg.payload.startsWith(\"== boiler_flow_water_temp\")){\n    return null;    \n}\n\nreturn {\n    topic: \"water_temp\",\n    payload:  Number(msg.payload.replace(/[^0-9.]/g,''))\n};",
         "outputs": 1,
         "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 550,
         "y": 560,
         "wires": [
@@ -1557,70 +1599,6 @@
         "wires": []
     },
     {
-        "id": "e2d99c23.4b9c28",
-        "type": "server-events",
-        "z": "374f7c93.e65914",
-        "name": "DeConz events",
-        "server": "bfed26e3.9fa28",
-        "event_type": "deconz_event",
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "x": 260,
-        "y": 280,
-        "wires": [
-            [
-                "7a0a8630.61b178"
-            ]
-        ]
-    },
-    {
-        "id": "7a0a8630.61b178",
-        "type": "switch",
-        "z": "374f7c93.e65914",
-        "name": "",
-        "property": "payload.event.id",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "switch_4",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "switch_5",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "switch_6",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 3,
-        "x": 510,
-        "y": 280,
-        "wires": [
-            [],
-            [],
-            [
-                "d0d696bb.2bbc08",
-                "8c52d858.e66ae"
-            ]
-        ]
-    },
-    {
         "id": "5824a24a.a4724c",
         "type": "api-call-service",
         "z": "374f7c93.e65914",
@@ -1631,76 +1609,15 @@
         "service_domain": "light",
         "service": "turn_on",
         "entityId": "light.cave_desk",
-        "data": "{}",
+        "data": "{\"brightness\": 200}",
         "dataType": "json",
         "mergecontext": "",
-        "output_location": "",
+        "output_location": "payload",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1350,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d0d696bb.2bbc08",
-        "type": "switch",
-        "z": "374f7c93.e65914",
-        "name": "On/Hold/Release | Off/Hold/Release",
-        "property": "payload.event.event",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "1002",
-                "vt": "num"
-            },
-            {
-                "t": "eq",
-                "v": "1001",
-                "vt": "num"
-            },
-            {
-                "t": "eq",
-                "v": "1003",
-                "vt": "num"
-            },
-            {
-                "t": "eq",
-                "v": "2002",
-                "vt": "num"
-            },
-            {
-                "t": "eq",
-                "v": "2001",
-                "vt": "num"
-            },
-            {
-                "t": "eq",
-                "v": "2003",
-                "vt": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 6,
-        "x": 910,
+        "x": 1010,
         "y": 300,
         "wires": [
-            [
-                "5824a24a.a4724c"
-            ],
-            [
-                "fef02c3b.442c28"
-            ],
-            [],
-            [
-                "8cdc95c9.3d8dc"
-            ],
-            [
-                "70424785.21d92"
-            ],
             []
         ]
     },
@@ -1718,28 +1635,14 @@
         "data": "{}",
         "dataType": "json",
         "mergecontext": "",
-        "output_location": "",
+        "output_location": "payload",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1350,
-        "y": 300,
+        "x": 1010,
+        "y": 520,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "8c52d858.e66ae",
-        "type": "debug",
-        "z": "374f7c93.e65914",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 850,
-        "y": 460,
-        "wires": []
     },
     {
         "id": "70424785.21d92",
@@ -1758,8 +1661,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1350,
-        "y": 420,
+        "x": 1010,
+        "y": 640,
         "wires": [
             []
         ]
@@ -1778,13 +1681,734 @@
         "data": "{\"brightness_step\":20}",
         "dataType": "json",
         "mergecontext": "",
-        "output_location": "",
+        "output_location": "payload",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1350,
-        "y": 200,
+        "x": 1010,
+        "y": 420,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "0797fb2e2e498229",
+        "type": "subflow:2bd693293624bec5",
+        "z": "374f7c93.e65914",
+        "name": "switch_6",
+        "env": [
+            {
+                "name": "SWITCH_ID",
+                "value": "switch_6",
+                "type": "str"
+            }
+        ],
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "5824a24a.a4724c"
+            ],
+            [
+                "8cdc95c9.3d8dc"
+            ]
+        ]
+    },
+    {
+        "id": "70a4ed05770e8a1d",
+        "type": "inject",
+        "z": "374f7c93.e65914",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 300,
+        "wires": [
+            [
+                "5824a24a.a4724c"
+            ]
+        ]
+    },
+    {
+        "id": "5899d5ee5ba73818",
+        "type": "inject",
+        "z": "374f7c93.e65914",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 640,
+        "wires": [
+            [
+                "8cdc95c9.3d8dc"
+            ]
+        ]
+    },
+    {
+        "id": "dc1069cd7d473c48",
+        "type": "debug",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 910,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "34518d4cd4ca95c8",
+        "type": "alexa-smart-home-v3",
+        "z": "42c3e6b533752f23",
+        "conf": "12932107.cee0af",
+        "device": "36100",
+        "acknowledge": true,
+        "name": "Relaxing bath lights",
+        "topic": "",
+        "x": 310,
+        "y": 680,
+        "wires": [
+            [
+                "06c05e7ba4de8e88",
+                "dc1069cd7d473c48"
+            ]
+        ]
+    },
+    {
+        "id": "06c05e7ba4de8e88",
+        "type": "api-call-service",
+        "z": "42c3e6b533752f23",
+        "name": "Patiting scene",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "scene",
+        "service": "turn_on",
+        "entityId": "scene.bathroom_bath",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 920,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "365f1ef30323fcb2",
+        "type": "inject",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 620,
+        "wires": [
+            [
+                "06c05e7ba4de8e88"
+            ]
+        ]
+    },
+    {
+        "id": "5318cb5aca7a6798",
+        "type": "subflow:2bd693293624bec5",
+        "z": "42c3e6b533752f23",
+        "name": "switch_3",
+        "env": [
+            {
+                "name": "SWITCH_ID",
+                "value": "switch_3",
+                "type": "str"
+            }
+        ],
+        "x": 260,
+        "y": 140,
+        "wires": [
+            [
+                "94d62dbe998ec7db",
+                "c35480376687f58b"
+            ],
+            [
+                "8b88aba697b7200a"
+            ]
+        ]
+    },
+    {
+        "id": "b0b97b7d98f1ce19",
+        "type": "poll-state",
+        "z": "42c3e6b533752f23",
+        "name": "HA Bathroom exhaust humidity",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "updateinterval": "30",
+        "updateIntervalUnits": "seconds",
+        "outputinitially": true,
+        "outputonchanged": true,
+        "entity_id": "sensor.bathroom_humidity",
+        "state_type": "num",
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "dc1069cd7d473c48",
+                "75f9732e65221d6c"
+            ]
+        ]
+    },
+    {
+        "id": "2cabb530afbb897c",
+        "type": "api-call-service",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.bathroom_fan_speed",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1050,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75f9732e65221d6c",
+        "type": "switch",
+        "z": "42c3e6b533752f23",
+        "name": "> X",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "64",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 770,
+        "y": 400,
+        "wires": [
+            [
+                "2cabb530afbb897c"
+            ],
+            [
+                "128ca1803e3c6473"
+            ]
+        ]
+    },
+    {
+        "id": "128ca1803e3c6473",
+        "type": "api-call-service",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.bathroom_fan_speed",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1050,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "94d62dbe998ec7db",
+        "type": "api-call-service",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.bathroom_fan",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1050,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75e13f912b7e44ec",
+        "type": "api-call-service",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.bathroom_fan",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1050,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b88aba697b7200a",
+        "type": "trigger",
+        "z": "42c3e6b533752f23",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "10",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 730,
+        "y": 260,
+        "wires": [
+            [
+                "75e13f912b7e44ec"
+            ]
+        ]
+    },
+    {
+        "id": "c35480376687f58b",
+        "type": "change",
+        "z": "42c3e6b533752f23",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "8b88aba697b7200a"
+            ]
+        ]
+    },
+    {
+        "id": "7c8f0336d442f6ed",
+        "type": "alexa-smart-home-v3",
+        "z": "df7063e97c28a022",
+        "conf": "12932107.cee0af",
+        "device": "36999",
+        "acknowledge": false,
+        "name": "Front door",
+        "topic": "",
+        "x": 240,
+        "y": 420,
+        "wires": [
+            [
+                "278a0382267d67e2",
+                "901f01be174c7858"
+            ]
+        ]
+    },
+    {
+        "id": "278a0382267d67e2",
+        "type": "switch",
+        "z": "df7063e97c28a022",
+        "name": "lock/unlock",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Lock",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Unlock",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 420,
+        "wires": [
+            [
+                "ccdebfcf43739c2e"
+            ],
+            [
+                "70f90699d56b7b99"
+            ]
+        ]
+    },
+    {
+        "id": "ccdebfcf43739c2e",
+        "type": "api-call-service",
+        "z": "df7063e97c28a022",
+        "name": "HA Front door lock",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "lock",
+        "entityId": "lock.front_door",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "out",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 770,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "70f90699d56b7b99",
+        "type": "api-call-service",
+        "z": "df7063e97c28a022",
+        "name": "HA Front door unlock",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "unlock",
+        "entityId": "lock.front_door",
+        "data": "{}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "out",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 780,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b4b5e750ae9cdf5",
+        "type": "alexa-smart-home-v3-resp",
+        "z": "df7063e97c28a022",
+        "x": 810,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "10e086c0563610e5",
+        "type": "debug",
+        "z": "df7063e97c28a022",
+        "name": "ACKs",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "901f01be174c7858",
+        "type": "change",
+        "z": "df7063e97c28a022",
+        "name": "Ack",
+        "rules": [
+            {
+                "t": "set",
+                "p": "acknowledge",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 540,
+        "wires": [
+            [
+                "5b4b5e750ae9cdf5",
+                "10e086c0563610e5"
+            ]
+        ]
+    },
+    {
+        "id": "92f8230f33f681e9",
+        "type": "server-state-changed",
+        "z": "df7063e97c28a022",
+        "name": "HA lock event",
+        "server": "bfed26e3.9fa28",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "lock.front_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "81fcf29eb09b6aa0",
+                "cce780b3b5035eff"
+            ]
+        ]
+    },
+    {
+        "id": "81fcf29eb09b6aa0",
+        "type": "debug",
+        "z": "df7063e97c28a022",
+        "name": "HA Event",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "cce780b3b5035eff",
+        "type": "switch",
+        "z": "df7063e97c28a022",
+        "name": "locked/unlocked",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "locked",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "unlocked",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "d1582a39120806dd"
+            ],
+            [
+                "36d42e9e3a51b038"
+            ]
+        ]
+    },
+    {
+        "id": "d1582a39120806dd",
+        "type": "change",
+        "z": "df7063e97c28a022",
+        "name": "LOCKED",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"state\":{\"lock\":\"LOCKED\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 180,
+        "wires": [
+            [
+                "c96f4dd3546aa627",
+                "ac968158b49cf2c0"
+            ]
+        ]
+    },
+    {
+        "id": "36d42e9e3a51b038",
+        "type": "change",
+        "z": "df7063e97c28a022",
+        "name": "UNLOCKED",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"state\":{\"lock\":\"UNLOCKED\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 240,
+        "wires": [
+            [
+                "c96f4dd3546aa627",
+                "ac968158b49cf2c0"
+            ]
+        ]
+    },
+    {
+        "id": "c96f4dd3546aa627",
+        "type": "debug",
+        "z": "df7063e97c28a022",
+        "name": "Alexa set state",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ac968158b49cf2c0",
+        "type": "alexa-smart-home-v3-state",
+        "z": "df7063e97c28a022",
+        "conf": "12932107.cee0af",
+        "device": "36999",
+        "name": "Front door",
+        "x": 1170,
+        "y": 180,
+        "wires": []
     }
 ]
